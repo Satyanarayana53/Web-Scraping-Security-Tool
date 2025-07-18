@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Scan Result</title>
+    <link rel="stylesheet" href="/static/result.css" />
+    <link rel="icon" type="image/png" href="./../static/security.png" />
+</head>
+<body>
+
+    <video autoplay muted loop id="bg-video">
+    <source src="{{ url_for('static', filename='background2.mp4') }}" type="video/mp4">
+    Your browser does not support HTML5 video.
+    </video>
+
+    <div class="container">
+        <h1>Scan Result</h1>
+        <div id="result"></div>
+        <a href="/">Back to Scan</a>
+    </div>
+
+    <script>
+        async function loadResult() {
+            const params = new URLSearchParams(window.location.search);
+            const url = params.get('url');
+            if (!url) {
+                document.getElementById('result').textContent = 'No URL specified.';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/result_data?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+                if (response.ok) {
+                    if (data.error) {
+                        document.getElementById('result').textContent = data.error;
+                        return;
+                    }
+                    let html = `<p><strong>URL:</strong> ${data.url}</p>`;
+                    if (data.issues.length === 0) {
+                        html += '<p>No security issues found.</p>';
+                    } else {
+                        html += '<ul>';
+                        data.issues.forEach(issue => {
+                            html += `<li>${issue}</li>`;
+                        });
+                        html += '</ul>';
+                    }
+                    html += `<h3>HTML Snippet:</h3><pre>${data.html_snippet.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>`;
+                    document.getElementById('result').innerHTML = html;
+                } else {
+                    document.getElementById('result').textContent = data.error || 'Error loading result';
+                }
+            } catch (err) {
+                document.getElementById('result').textContent = 'Network error';
+            }
+        }
+
+        loadResult();
+    </script>
+</body>
+</html>

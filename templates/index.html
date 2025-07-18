@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Web Scraping Security Tool</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link rel="icon" type="image/png" href="./../static/security.png" />
+
+</head>
+<body>
+    
+    <video autoplay muted loop id="bg-video">
+    <source src="{{ url_for('static', filename='background.mp4') }}" type="video/mp4">
+    Your browser does not support HTML5 video.
+    </video>
+
+    <div class="container" style="text-align: center;">
+        <h1>Web Scraping Security Tool</h1>
+        <form id="scrapeForm">
+            <input type="url" id="urlInput" placeholder="Enter URL to scan" required autocomplete=off />
+            <button type="submit">Scan</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('scrapeForm');
+        const message = document.getElementById('message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            message.textContent = "Scanning...";
+            const url = document.getElementById('urlInput').value;
+
+            try {
+                const response = await fetch('/scrape', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    window.location.href = `/result?url=${encodeURIComponent(url)}`;
+                } else {
+                    message.textContent = data.error || 'Error occurred';
+                }
+            } catch (err) {
+                message.textContent = 'Network error';
+            }
+        });
+    </script>
+</body>
+</html>
