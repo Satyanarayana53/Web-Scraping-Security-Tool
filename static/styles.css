@@ -36,9 +36,23 @@ body {
     box-shadow: 0 8px 20px rgb(255, 0, 217);
 }
 
-h1 {
+h1.gradient-text {
+    font-size: 4rem;
     text-align: center;
-}
+    font-weight: bold;
+    background: linear-gradient(270deg, #090052, #e003fd, #1ffb02, #01090b,#ee0606,#ffea00);
+    background-size: 800% 800%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 5s ease-in-out infinite;
+    margin-top: 50px;
+    }
+    
+@keyframes gradientFlow {
+    0% { background-position: 0% 100%; }
+    50% { background-position: 50% 90%; }
+    100% { background-position: 10% 100%; }
+    }
 
 form {
     display: flex;
