@@ -3,6 +3,11 @@
 This tool helps analyze and scan URLs to detect and mitigate potential web scraping threats.
 It aims to provide a simple, user-friendly interface to test website links for vulnerability or scraping issues.
 
+---
+Public Link: https://0vc08z3x-5000.inc1.devtunnels.ms/
+
+Hint: The public link will work only when my local server is running.
+
 ## 🔧 Features
 
 - URL input scanner with real-time validation
