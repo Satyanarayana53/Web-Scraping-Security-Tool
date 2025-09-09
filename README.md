@@ -24,6 +24,7 @@ Hint: The public link will work only when my local server is running.
 
 ## 📁 Project Structure
 
+```
 WEB SCRAPING SECURITY TOOL
 ├──static
 │   ├──result.css
@@ -39,7 +40,7 @@ WEB SCRAPING SECURITY TOOL
 ├──README.md
 ├──requirements.txt
 
-
+```
 ---
 
 If you want me to customize this based on your technologies (e.g., Flask, MongoDB), just let me know!
